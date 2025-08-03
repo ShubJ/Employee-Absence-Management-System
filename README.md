@@ -1,98 +1,134 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Employee Absence Management System
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The Employee Absence Management System (EAMS) is a backend API built using the NestJS framework. It provides functionality for managing employee absence requests, including creating, approving, and rejecting absence requests. The system also includes authentication and authorization mechanisms to ensure secure access to its features.
 
-## Project setup
+---
+
+## Tech Stack
+
+- **Framework**: [NestJS](https://nestjs.com) - A progressive Node.js framework for building efficient and scalable server-side applications.
+- **Database**: SQLite - Lightweight relational database.
+- **ORM**: TypeORM - Object Relational Mapper for database interactions.
+- **Authentication**: JWT (JSON Web Token) for secure user authentication.
+- **Validation**: Class-validator for validating DTOs.
+- **Throttling**: NestJS Throttler for rate-limiting requests.
+- **Logging**: Custom request logging interceptor.
+- **Error Handling**: Global exception filter for consistent error responses.
+
+---
+
+## Features
+
+### Authentication
+
+- **Login**: Users can log in using their email.
+- **Registration**: New users can register with their name, email, and role (Employee/Admin).
+- **JWT-based Authentication**: Secure access using bearer tokens.
+
+### Absence Management
+
+- **Create Absence Requests**: Employees can create absence requests with start and end dates and a reason.
+- **Approve/Reject Absence Requests**: Admins can approve or reject pending absence requests.
+- **View Absence Requests**: Users can view absence requests with pagination and filtering by status.
+
+### User Management
+
+- **Role-based Access Control**: Employees and Admins have different permissions.
+- **User Profiles**: Users can view their profile and associated absence requests.
+
+### Additional Features
+
+- **Rate Limiting**: Prevent abuse by limiting the number of requests per minute.
+- **Global Error Handling**: Consistent error responses for all endpoints.
+- **Request Logging**: Logs all incoming requests and their responses.
+
+---
+
+## Project Setup
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-repo/employee-absence-management-system.git
+   cd employee-absence-management-system
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up the environment variables:
+   - Create a `.env` file in the root directory.
+   - Add the following variables:
+     ```
+     NODE_ENV=development
+     PORT=3000
+     DATABASE_PATH=database.sqlite
+     JWT_SECRET=your-secret-key
+     JWT_EXPIRATION=3600s
+     ```
+
+4. Run database migrations (if needed):
+   ```bash
+   npm run build
+   ```
+
+---
+
+## Running the Project
+
+### Development Mode
+
+Start the server in development mode with hot-reloading:
 
 ```bash
-$ npm install
+npm run start:dev
 ```
 
-## Compile and run the project
+### Production Mode
+
+Build and start the server in production mode:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+npm run start:prod
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## API Endpoints
 
-# e2e tests
-$ npm run test:e2e
+### Authentication
 
-# test coverage
-$ npm run test:cov
-```
+- **POST /auth/login**: Login with email.
+- **POST /auth/register**: Register a new user.
+
+### Absences
+
+- **GET /absences**: View all absence requests (Admin only).
+- **POST /absences**: Create a new absence request (Employee only).
+- **PATCH /absences/:id/approve**: Approve an absence request (Admin only).
+- **PATCH /absences/:id/reject**: Reject an absence request (Admin only).
+
+---
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+For deployment, follow the [NestJS deployment guide](https://docs.nestjs.com/deployment). You can deploy the application on platforms like AWS, Heroku, or Docker.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.
